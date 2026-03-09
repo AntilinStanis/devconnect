@@ -1,19 +1,25 @@
-import express, { type Application, type Request, type Response } from 'express';
+import express, { type Application } from 'express';
+import { connection } from "./model/index.js";
+import CONFIG from "../config/config.js";
+import cookieParser from "cookie-parser";
+import http from "http";
 
+const server = http.createServer();
 const app: Application = express();
 
-const PORT = 3000;
+import authRoutes from "./routes/auth.js";
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
-
-// Middleware to parse JSON (needed for your Parking Lot API)
 app.use(express.json());
+app.use(cookieParser());
 
-// A simple test route
-app.get('/', (req: Request, res: Response) => {
-    res.send('Dev Connect is Live! 🚀');
+app.use("/api/auth", authRoutes.router);
+
+connection().then(() => {
+    console.log("successfully connected to the database...");
+    server.listen(CONFIG.APP_PORT || 3000, () => {
+        console.log(`server running on port ${CONFIG.APP_PORT || 3000}....`);
+    });
+}).catch(err => {
+    console.log("couldn't connect to the database", err);
 });
-
 export default app;
