@@ -4,15 +4,22 @@ import CONFIG from "../config/config.js";
 import cookieParser from "cookie-parser";
 import http from "http";
 
+import authRoutes from "./routes/auth.js";
+import requestRoutes from "./routes/request.js";
+import profileRoutes from "./routes/profile.js";
+import userRequestRouter from "./routes/request.js";
+
 const server = http.createServer();
 const app: Application = express();
 
-import authRoutes from "./routes/auth.js";
 
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api/auth", authRoutes.router);
+app.use("/auth", authRoutes.router);
+app.use("/request", requestRoutes.router);
+app.use("/profile", profileRoutes.router);
+app.use('/user', userRequestRouter.router);
 
 connection().then(() => {
     console.log("successfully connected to the database...");

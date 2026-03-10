@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken"; // Changed from * as jwt
 import CONFIG from "../../config/config.js";
 import User, { type IUser } from "../model/user.js";
 
-// 1. Extend the Express Request type to include the user
 declare global {
   namespace Express {
     interface Request {

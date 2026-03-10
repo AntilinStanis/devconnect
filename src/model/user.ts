@@ -1,13 +1,14 @@
-import mongoose, { Schema, Document, Model, type CallbackWithoutResultAndOptionalError, type HydratedDocument } from "mongoose";
+import mongoose, { Schema, Document, Model, type CallbackWithoutResultAndOptionalError, type HydratedDocument, Types } from "mongoose";
 import validator from "validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import CONFIG from "../../config/config.js";
-import type { NextFunction } from "express";
 
 // 1. Define an Interface for the User Document
 // This tells TypeScript exactly what methods and properties a "User" has.
 export interface IUser extends Document {
+    _id: Types.ObjectId; // The actual MongoDB ID
+    id: string;
     firstName: string;
     lastName: string;
     emailId: string;
