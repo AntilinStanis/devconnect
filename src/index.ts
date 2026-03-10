@@ -9,8 +9,8 @@ import requestRoutes from "./routes/request.js";
 import profileRoutes from "./routes/profile.js";
 import userRequestRouter from "./routes/request.js";
 
-const server = http.createServer();
 const app: Application = express();
+const server = http.createServer(app);
 
 
 app.use(express.json());
