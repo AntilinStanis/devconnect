@@ -8,10 +8,13 @@ import authRoutes from "./routes/auth.js";
 import requestRoutes from "./routes/request.js";
 import profileRoutes from "./routes/profile.js";
 import userRequestRouter from "./routes/request.js";
+import chatRoutes from "./routes/chat.js";
+import { initializeSocket } from "./utils/socket.js";
+import "./utils/cronjob.js";
 
 const app: Application = express();
 const server = http.createServer(app);
-
+initializeSocket(server);
 
 app.use(express.json());
 app.use(cookieParser());
@@ -20,6 +23,7 @@ app.use("/auth", authRoutes.router);
 app.use("/request", requestRoutes.router);
 app.use("/profile", profileRoutes.router);
 app.use('/user', userRequestRouter.router);
+app.use('/chat', chatRoutes.router);
 
 connection().then(() => {
     console.log("successfully connected to the database...");
